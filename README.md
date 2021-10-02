@@ -1,2 +1,2 @@
-# Web-programming-labs
-Elagin Dmitrii M33101
+# Shit Code
+Here u can see our project
