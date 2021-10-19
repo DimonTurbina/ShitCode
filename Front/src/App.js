@@ -1,5 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link, useParams, BrowserRouter
+} from "react-router-dom";
 import './App.css';
 
 function Home() {
@@ -45,11 +50,76 @@ function ShitPage() {
   </div>;
 }
 
+function AddShit() {
+  let id;
+  ({id} = useParams());
+  const code_container = useRef(null);
+
+  function send() {
+    fetch("/shitten_api/shits/", {
+      "method": "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      "body": JSON.stringify({
+        "code": code_container.current.value,
+        "user_id": id
+      })
+    }).then(
+        r => r.json().then((data) => {
+              window.location.href = "/shit/shat/" + data['user_name']
+            }
+        )
+    )
+  }
+
+  return <div>
+    <h5>Введи код</h5>
+    <form style={{width: "60whfunction AddShit() {
+    let id;
+    ({id} = useParams());
+    const code_container = useRef(null);
+
+    function send() {
+        fetch("/shitten_api/shits/", {
+            "method": "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            "body": JSON.stringify({
+                "code": code_container.current.value,
+                "user_id": id
+            })
+        }).then(
+            r => r.json().then((data) => {
+                    window.location.href = "/shit/shat/" + data['user_name']
+                }
+            )
+        )
+    }
+
+    return <div>
+        <h5>Введи код</h5>
+        <form style={{width: "60wh"}}>
+            <textarea ref={code_container} style={{height: "30vh", width: "100%"}} cols="100" name="code"/><br/>
+            <input type='button' value="Send" onClick={send}/>
+        </form>
+    </div>;
+}"}}>
+      <textarea ref={code_container} style={{height: "30vh", width: "100%"}} cols="100" name="code"/><br/>
+      <input type='button' value="Send" onClick={send}/>
+    </form>
+  </div>;
+}
 
 function App() {
   return (
     <div className="App">
-      <Home></Home>
+    <div style={{margin: "auto"}}>
+    <h1>ShitCode</h1>
+    </div>
     </div>
   );
 }
