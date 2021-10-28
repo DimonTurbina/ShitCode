@@ -12,6 +12,7 @@ function Home() {
   return <div>
 
     <h1>Shit code</h1>
+    <p>Shit code counter by <a href='https://yank0vy3rdna.ru'>yank0vy3rdna</a></p>
   </div>;
 }
 
@@ -76,38 +77,7 @@ function AddShit() {
 
   return <div>
     <h5>Введи код</h5>
-    <form style={{width: "60whfunction AddShit() {
-    let id;
-    ({id} = useParams());
-    const code_container = useRef(null);
-
-    function send() {
-        fetch("/shitten_api/shits/", {
-            "method": "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            "body": JSON.stringify({
-                "code": code_container.current.value,
-                "user_id": id
-            })
-        }).then(
-            r => r.json().then((data) => {
-                    window.location.href = "/shit/shat/" + data['user_name']
-                }
-            )
-        )
-    }
-
-    return <div>
-        <h5>Введи код</h5>
-        <form style={{width: "60wh"}}>
-            <textarea ref={code_container} style={{height: "30vh", width: "100%"}} cols="100" name="code"/><br/>
-            <input type='button' value="Send" onClick={send}/>
-        </form>
-    </div>;
-}"}}>
+    <form style={{width: "60wh"}}>
       <textarea ref={code_container} style={{height: "30vh", width: "100%"}} cols="100" name="code"/><br/>
       <input type='button' value="Send" onClick={send}/>
     </form>
@@ -116,11 +86,23 @@ function AddShit() {
 
 function App() {
   return (
-    <div className="App">
-    <div style={{margin: "auto"}}>
-    <h1>ShitCode</h1>
-    </div>
-    </div>
+      <div className="App">
+        <Router>
+          <div style={{margin: "auto"}}>
+            <Switch>
+              <Route path="/shit/add_shit/:id">
+                <AddShit/>
+              </Route>
+              <Route path="/shit/shat/:name">
+                <ShitPage/>
+              </Route>
+              <Route path="/shit/">
+                <Home/>
+              </Route>
+            </Switch>
+          </div>
+        </Router>
+      </div>
   );
 }
 
