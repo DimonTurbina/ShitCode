@@ -16,6 +16,52 @@ function Home() {
   </div>;
 }
 
+function LogInPage() {
+  const [login, setLogin] = useState("")
+  const [password, setPassword] = useState("")
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({
+      "login": login.target.value,
+      "password": password.target.value
+    })
+    fetch("/shitten_api/auth/", {
+      "method": "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "login": login.target.value,
+        "password": password.target.value
+      })
+    }).then(
+        r => r.json().then((data) => {
+              window.location.href = "/shit/sgithat/" + data['user_name']
+            }
+        )
+    )
+  }
+  return <div>
+    <div className="container">
+      <form onSubmit={handleSubmit}>
+        <label>
+          <div className="five columns">Login:</div>
+          <div className="five columns"><input type="text" value={login.current} onChange={setLogin}/></div>
+        </label>
+        <label>
+          <div className="five columns">Password:</div>
+          <div className="five columns"><input type="text" value={password.current} onChange={setPassword}/></div>
+        </label>
+        <div className="five columns">
+          <input type="submit" value="Отправить"/>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+
 function ShitPage() {
   let name;
   ({name} = useParams());
@@ -87,21 +133,23 @@ function AddShit() {
 function App() {
   return (
       <div className="App">
-        <Router>
-          <div style={{margin: "auto"}}>
-            <Switch>
-              <Route path="/shit/add_shit/:id">
-                <AddShit/>
-              </Route>
-              <Route path="/shit/shat/:name">
-                <ShitPage/>
-              </Route>
-              <Route path="/shit/">
-                <Home/>
-              </Route>
-            </Switch>
-          </div>
-        </Router>
+        <div style={{margin: "auto"}}>
+          <h1>ShitCode</h1>
+          <LogInPage/>
+          {/*<Router>*/}
+          {/*        <Switch>*/}
+          {/*            <Route path="/shit/add_shit/:id">*/}
+          {/*                <AddShit/>*/}
+          {/*            </Route>*/}
+          {/*            <Route path="/shit/shat/:name">*/}
+          {/*                <ShitPage/>*/}
+          {/*            </Route>*/}
+          {/*            <Route path="/shit/">*/}
+          {/*                <Home/>*/}
+          {/*            </Route>*/}
+          {/*        </Switch>*/}
+          {/*</Router>*/}
+        </div>
       </div>
   );
 }
